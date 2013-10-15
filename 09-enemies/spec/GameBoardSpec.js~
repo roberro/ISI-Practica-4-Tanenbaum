@@ -108,6 +108,24 @@ describe("Clase GameBoard", function(){
 
     }); 
 
+
+    it("detect", function(){
+
+			var miNave = new GameBoard();
+			var obj = "nave";
+	
+			miNave.add(obj);
+			
+			var func = {call: function(){}};
+			spyOn(func, "call");
+			miNave.detect(func)
+			waits(100);
+		
+			expect(miNave.objects[0]).toBeTruthy();
+			expect(miNave.objects[1]).toBeFalsy();
+
+    });
+
     it("overlap", function(){
 		var miNave = new GameBoard();
 		var o1 = {x:2,y:2,h:1,w:1};

@@ -142,6 +142,6 @@ describe("Clase GameBoard", function(){
 		miNave.objects = [{type:"1",x:2,y:2,h:1,w:1},{type:"2",x:1,y:1,h:2,w:2}];
 		var obj = {x:2,y:2,h:1,w:1};
 
-		expect(miNave.collide(obj,"1")).toBeTruthy();
+		expect(miNave.collide(obj,"1")).toEqual(undefined);
     });
  });
