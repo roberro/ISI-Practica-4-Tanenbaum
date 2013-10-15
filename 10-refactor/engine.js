@@ -205,29 +205,34 @@ var GameBoard = function() {
 
     // Iterador que aplica el método funcName a todos los
     // objetos de objects
+    /*  
     this.iterate = function(funcName) {
 	// Convertimos en un array args (1..)
 	var args = Array.prototype.slice.call(arguments,1);
-	/*for(var i=0, len=this.objects.length; i<len;i++) {
+
+	for(var i=0, len=this.objects.length; i<len;i++) {
 	    var obj = this.objects[i];
 	    obj[funcName].apply(obj,args)
-	}*/
-	var iterar= function(item){
-	    item[funcName].apply(item,args)
-	};
-
-	_(this.objects).forEach(iterar);
-
+	}
     };
+  */
+  this.iterate = function(funcName) {
+    var args = Array.prototype.slice.call(arguments,1);
+    _.each(this.objects,function(obj){obj[funcName].apply(obj,args)});
+   // _.invoke(this.objects,funcName,args);  --> no se como introducir argumentos
+  };
 
     // Devuelve el primer objeto de objects para el que func es true
-    this.detect = function(func) {
-	/*for(var i = 0,val=null, len=this.objects.length; i < len; i++) {
+   /* this.detect = function(func) {
+	for(var i = 0,val=null, len=this.objects.length; i < len; i++) {
 	    if(func.call(this.objects[i])) return this.objects[i];
 	}
-	return false;*/
-	var dect = _.find(this.objects,function(func) {return func });
-    };
+	return false;
+	  };
+ */
+  this.detect = function(func) {
+    return ( _.find(this.objects,function(obj){return func.call(obj)}));  
+  };
 
     // Cuando Game.loop() llame a step(), hay que llamar al método
     // step() de todos los objetos contenidos en el tablero.  Antes se
