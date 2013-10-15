@@ -160,8 +160,8 @@ PlayerShip.prototype = new Sprite();
 // no una copia para cada objeto misil
 var PlayerMissile = function(x,y) {
     this.setup('missile',{ vy: -700 });
-    this.x = x + this.w/2;
-    this.y = y + this.h; 
+    this.x = x - this.w/2;
+    this.y = y - this.h; 
 };
 
 PlayerMissile.prototype = new Sprite();
