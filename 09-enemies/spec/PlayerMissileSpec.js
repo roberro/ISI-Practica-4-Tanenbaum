@@ -26,3 +26,50 @@ Especificación:
 
 
 */
+describe("Clase PlayerMissile", function(){
+   var canvas, ctx;
+
+   beforeEach(function(){
+	loadFixtures('index.html');
+
+	canvas = $('#game')[0];
+	expect(canvas).toExist();
+
+	ctx = canvas.getContext('2d');
+	expect(ctx).toBeDefined();
+
+});
+    it("draw", function(){
+		SpriteSheet = {
+		  map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }},
+		  draw: function() {}
+		};
+
+		var miMissile = new PlayerMissile(1,1);
+ 
+		spyOn(SpriteSheet, "draw");
+ 
+		miMissile.draw(ctx)
+	 
+		expect(SpriteSheet.draw).toHaveBeenCalled();
+		expect(SpriteSheet.draw.calls[0].args[1]).toEqual("missile");
+		expect(SpriteSheet.draw.calls[0].args[2]).toEqual(miMissile.x);
+		expect(SpriteSheet.draw.calls[0].args[3]).toEqual(miMissile.y);
+
+    });
+
+    it("step", function(){
+			var miMissile = new PlayerMissile(1,1);
+			misil = {
+			   map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1,vy: -700 }},
+	   		remove: function(obj) {}
+			};
+
+		miMissile.board=misil;
+
+		spyOn(misil, "remove");
+
+		miMissile.step(1);
+		expect(misil.remove).toHaveBeenCalled();
+    });
+});
