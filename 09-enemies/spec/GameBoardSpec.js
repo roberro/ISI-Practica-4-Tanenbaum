@@ -40,3 +40,45 @@ Especificación: GameBoard debe
 
 
 */
+describe("Clase GameBoard", function(){
+   
+    beforeEach(function(){
+loadFixtures('index.html');
+
+canvas = $('#game')[0];
+expect(canvas).toExist();
+
+ctx = canvas.getContext('2d');
+expect(ctx).toBeDefined();
+
+    });
+
+
+
+   it("interacción con Game", function(){
+ 
+        //Creamos dos objetos en la lista
+        var board = new GameBoard();
+        board.add(new PlayerShip());
+        board.add(new PlayerShip());
+        expect(board.objects.length).toEqual(2);
+        
+        //Programamos los spys para cada función de cada objeto
+        spyOn(board.objects[1], "step");
+        spyOn(board.objects[0], "step");
+        spyOn(board.objects[1], "draw");
+        spyOn(board.objects[0], "draw");
+        
+        //Comprobamos que al llamar la función en GameBoard, ésta se ocupa
+        //de ejecutar los metodos en cada uno de los objetos de la lista
+        var dt = 1;
+        board.step(dt);
+        expect(board.objects[0].step).toHaveBeenCalled();
+        expect(board.objects[1].step).toHaveBeenCalled();
+ 
+        board.draw(ctx);
+        expect(board.objects[1].draw).toHaveBeenCalled();
+        expect(board.objects[0].draw).toHaveBeenCalled();
+
+    }); 
+ });
