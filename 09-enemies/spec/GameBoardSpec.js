@@ -43,14 +43,40 @@ Especificación: GameBoard debe
 describe("Clase GameBoard", function(){
    
     beforeEach(function(){
-loadFixtures('index.html');
+        loadFixtures('index.html');
 
-canvas = $('#game')[0];
-expect(canvas).toExist();
+        canvas = $('#game')[0];
+        expect(canvas).toExist();
 
-ctx = canvas.getContext('2d');
-expect(ctx).toBeDefined();
+        ctx = canvas.getContext('2d');
+        expect(ctx).toBeDefined();
+    });
 
+    // add()
+    it("add()", function(){
+        var miGameBoard = new GameBoard();
+        var obj = "nave";
+        miGameBoard.add(obj);
+        expect(miGameBoard.add(obj)).toEqual("nave");
+    });
+
+        // remove()
+    it("remove(), resetRemoved, finalizeRemoved", function(){
+        var miGameBoard = new GameBoard();
+        var obj1 = "nave1";
+        var obj2 = "nave2";
+        var obj3 = "nave3";
+        miGameBoard.add(obj1);
+        miGameBoard.add(obj2);
+        miGameBoard.add(obj3);
+
+        miGameBoard.resetRemoved();
+        miGameBoard.remove(obj2);
+        miGameBoard.finalizeRemoved();
+
+        expect(miGameBoard.objects[0]).toEqual("nave1");
+        expect(miGameBoard.objects[1]).toEqual("nave3");
+        expect(miGameBoard.objects[2]).toEqual(undefined);
     });
 
 
