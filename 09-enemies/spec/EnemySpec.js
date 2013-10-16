@@ -61,3 +61,66 @@
 
 */
 
+    describe("Clase Enemy", function(){
+   
+    beforeEach(function(){
+        loadFixtures('index.html');
+
+        canvas = $('#game')[0];
+        expect(canvas).toExist();
+
+        ctx = canvas.getContext('2d');
+        expect(ctx).toBeDefined();
+        
+        SpriteSheet = {
+          map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                  ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
+                  enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },},
+          draw();
+        };
+        
+    });
+    
+    
+   it("draw", function(){
+        var board = new GameBoard();
+        enemigo= new Enemy(enemies.basic)
+        board.add(enemigo);
+        board.add(new Enemy(enemies.basic, { x: 200 }));
+        expect(board.objects.length).toEqual(2);   
+        
+        
+        spyOn(SpriteSheet, "draw");
+ 
+		    enemigo.draw(ctx)
+        expect(SpriteSheet.draw).toHaveBeenCalled();
+		    expect(SpriteSheet.draw.calls[0].args[1]).toEqual("enemy_purple");
+		    expect(SpriteSheet.draw.calls[0].args[2]).toEqual(enemigo.x);
+		    expect(SpriteSheet.draw.calls[0].args[3]).toEqual(enemigo.y);     
+   });      
+        
+   
+});   
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
