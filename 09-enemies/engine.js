@@ -118,6 +118,17 @@ var SpriteSheet = new function() {
                       Math.floor(x), Math.floor(y),
                       s.w, s.h);
     };
+    
+    this.drawMedio = function(ctx,sprite,x,y,frame) {
+	var s = this.map[sprite];
+	if(!frame) frame = 0;
+	ctx.drawImage(this.image,
+                      s.sx + frame * s.w, 
+                      s.sy, 
+                      s.w, s.h, 
+                      Math.floor(x), Math.floor(y),
+                      s.w/2, s.h/2);
+    };
 }
 
 

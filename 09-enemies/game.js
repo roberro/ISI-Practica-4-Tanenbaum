@@ -170,7 +170,7 @@ var PlayerShip = function() {
 	    this.reload = this.reloadTime;
 
 	    // Se añaden al gameboard 2 misiles 
-	    this.board.add(new FireBall(this.x,this.y+this.h/2));
+	    this.board.add(new FireBallB(this.x+this.w,this.y+this.h/2));
 	    this.upB=false;
 	}
 	//FUEGO CON N
@@ -181,7 +181,7 @@ var PlayerShip = function() {
 	    this.reload = this.reloadTime;
 
 	    // Se añaden al gameboard 2 misiles 
-	    this.board.add(new FireBall(this.x,this.y+this.h/2));
+	    this.board.add(new FireBallN(this.x+this.w,this.y+this.h/2));
 	    this.upN=false;
 	}
     }
@@ -213,18 +213,19 @@ PlayerMissile.prototype.draw = function(ctx)  {
     SpriteSheet.draw(ctx,'missile',this.x,this.y);
 };
 
-var FireBall = function(x,y){
+// fireballB
+var FireBallB = function(x,y){
     this.w = (SpriteSheet.map['explosion'].w);
     this.h = (SpriteSheet.map['explosion'].h);
     this.x = x - this.w/2; 
 
     this.y = y - this.h; 
-    this.vy = -400;
-    this.vx = -200;
+    this.vy = -1500;
+    this.vx = -150;
   
 };
 
-FireBall.prototype.step = function(dt)  {
+FireBallB.prototype.step = function(dt)  {
     this.x += this.vx * dt;
     this.y += this.vy * dt;
     this.vy=this.vy+100;
@@ -232,11 +233,33 @@ FireBall.prototype.step = function(dt)  {
     if(this.x < -this.w) { this.board.remove(this); }
 };
 
-FireBall.prototype.draw = function(ctx)  {
-    SpriteSheet.draw(ctx,'explosion',this.x,this.y);
+FireBallB.prototype.draw = function(ctx)  {
+    SpriteSheet.drawMedio(ctx,'explosion',this.x,this.y);
 };
 
+// fireballN
+var FireBallN = function(x,y){
+    this.w = (SpriteSheet.map['explosion'].w);
+    this.h = (SpriteSheet.map['explosion'].h);
+    this.x = x - this.w/2; 
 
+    this.y = y - this.h; 
+    this.vy = -1500;
+    this.vx = 150;
+  
+};
+
+FireBallN.prototype.step = function(dt)  {
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    this.vy=this.vy+100;
+    if(this.y < -this.h) { this.board.remove(this); }
+    if(this.x < -this.w) { this.board.remove(this); }
+};
+
+FireBallN.prototype.draw = function(ctx)  {
+    SpriteSheet.drawMedio(ctx,'explosion',this.x,this.y);
+};
 
 // Constructor para las naves enemigas. Un enemigo se define mediante
 // un conjunto de propiedades provenientes de 3 sitios distintos, que
