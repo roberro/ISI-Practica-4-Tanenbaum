@@ -122,6 +122,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
 var PlayerShip = function() { 
 
     this.up = true;
+    this.upB= true;
+    this.upN= true;
 
     this.w =  SpriteSheet.map['ship'].w;
     this.h =  SpriteSheet.map['ship'].h;
@@ -160,27 +162,27 @@ var PlayerShip = function() {
 	  	this.up=false;
 	}
 
-	//FUEGO CON B
-	if(!Game.keys['fireB']) this.up = true;
-	if(Game.keys['fireB'] && this.reload < 0 && this.up ) {
+
+	if(!Game.keys['fireB']) this.upB = true;
+	if(Game.keys['fireB'] && this.reload < 0 && this.upB ) {
 	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
 	    //Game.keys['fire'] = false;
 	    this.reload = this.reloadTime;
 
 	    // Se añaden al gameboard 2 misiles 
 	    this.board.add(new FireBall(this.x,this.y+this.h/2));
-	    this.up=false;
+	    this.upB=false;
 	}
 	//FUEGO CON N
-	if(!Game.keys['fireN']) this.up = true;
-	if(Game.keys['fireN'] && this.reload < 0 && this.up ) {
+	if(!Game.keys['fireN']) this.upN = true;
+	if(Game.keys['fireN'] && this.reload < 0 && this.upN ) {
 	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
 	    //Game.keys['fire'] = false;
 	    this.reload = this.reloadTime;
 
 	    // Se añaden al gameboard 2 misiles 
 	    this.board.add(new FireBall(this.x,this.y+this.h/2));
-	    this.up=false;
+	    this.upN=false;
 	}
     }
 
