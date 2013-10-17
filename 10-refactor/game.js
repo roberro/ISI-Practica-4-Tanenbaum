@@ -199,41 +199,41 @@ PlayerMissile.prototype.step = function(dt)  {
 
 // fireballB
 var FireBallB = function(x,y){
-    this.w = (SpriteSheet.map['explosion'].w);
-    this.h = (SpriteSheet.map['explosion'].h);
+
+	 this.setup('explosion',{vy: -1500, vx: -150});
     this.x = x - this.w/2; 
 
     this.y = y - this.h; 
-    this.vy = -1500;
-    this.vx = -150;
+	 this.z=2;
   
 };
 
+FireBallB.prototype = new Sprite();
+
 FireBallB.prototype.step = function(dt)  {
+
     this.x += this.vx * dt;
     this.y += this.vy * dt;
     this.vy=this.vy+100;
     if(this.y < -this.h) { this.board.remove(this); }
     if(this.x < -this.w) { this.board.remove(this); }
+	 
 };
 
-FireBallB.prototype.draw = function(ctx)  {
-    SpriteSheet.drawMedio(ctx,'explosion',this.x,this.y);
-};
 
 // fireballN
 var FireBallN = function(x,y){
-    this.w = (SpriteSheet.map['explosion'].w);
-    this.h = (SpriteSheet.map['explosion'].h);
+	 this.setup('explosion',{vy: -1500, vx: 150});
     this.x = x - this.w/2; 
 
     this.y = y - this.h; 
-    this.vy = -1500;
-    this.vx = 150;
-  
+  	 this.z=2;
 };
 
+FireBallN.prototype = new Sprite();
+
 FireBallN.prototype.step = function(dt)  {
+	 	
     this.x += this.vx * dt;
     this.y += this.vy * dt;
     this.vy=this.vy+100;
@@ -241,9 +241,6 @@ FireBallN.prototype.step = function(dt)  {
     if(this.x < -this.w) { this.board.remove(this); }
 };
 
-FireBallN.prototype.draw = function(ctx)  {
-    SpriteSheet.drawMedio(ctx,'explosion',this.x,this.y);
-};
 
 // Constructor para las naves enemigas. Un enemigo se define mediante
 // un conjunto de propiedades provenientes de 3 sitios distintos, que
