@@ -21,6 +21,7 @@ OBJECT_PLAYER_PROJECTILE =  2,
 OBJECT_ENEMY             =  4,
 OBJECT_ENEMY_PROJECTILE  =  8,
 OBJECT_POWERUP           = 16;
+OBJECT_FIREBALL_PROJ     = 32;
 
 var startGame = function() {
     Game.setBoard(0,new Starfield(20,0.4,100,true))
@@ -213,7 +214,7 @@ PlayerMissile.prototype.step = function(dt)  {
 // fireballB
 var FireBallB = function(x,y){
 
-	 this.setup('explosion',{vy: -1500, vx: -150});
+	 this.setup('explosion',{vy: -1500, vx: -150, damage: 20});
     this.x = x - this.w/2; 
 
     this.y = y - this.h; 
@@ -222,12 +223,15 @@ var FireBallB = function(x,y){
 };
 
 FireBallB.prototype = new Sprite();
+FireBallB.prototype.type = OBJECT_FIREBALL_PROJ;
 
 FireBallB.prototype.step = function(dt)  {
 
     this.x += this.vx * dt;
     this.y += this.vy * dt;
     this.vy=this.vy+100;
+    var collision = this.board.collide(this,OBJECT_ENEMY);
+    if(collision) {collision.hit(this.damage)};
     if(this.y < -this.h) { this.board.remove(this); }
     if(this.x < -this.w) { this.board.remove(this); }
 	 
@@ -236,7 +240,7 @@ FireBallB.prototype.step = function(dt)  {
 
 // fireballN
 var FireBallN = function(x,y){
-	 this.setup('explosion',{vy: -1500, vx: 150});
+	 this.setup('explosion',{vy: -1500, vx: 150, damage: 20});
     this.x = x - this.w/2; 
 
     this.y = y - this.h; 
@@ -244,12 +248,15 @@ var FireBallN = function(x,y){
 };
 
 FireBallN.prototype = new Sprite();
+FireBallB.prototype.type = OBJECT_FIREBALL_PROJ;
 
 FireBallN.prototype.step = function(dt)  {
 	 	
     this.x += this.vx * dt;
     this.y += this.vy * dt;
     this.vy=this.vy+100;
+    var collision = this.board.collide(this,OBJECT_ENEMY);
+    if(collision) {collision.hit(this.damage)};
     if(this.y < -this.h) { this.board.remove(this); }
     if(this.x < -this.w) { this.board.remove(this); }
 };
