@@ -117,7 +117,7 @@ var SpriteSheet = new function() {
                       s.sy, 
                       s.w, s.h, 
                       Math.floor(x), Math.floor(y),
-                      s.w/z, s.h/z);
+                      s.w*z, s.h*z);
     };
 
   

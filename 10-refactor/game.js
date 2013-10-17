@@ -204,7 +204,7 @@ var FireBallB = function(x,y){
     this.x = x - this.w/2; 
 
     this.y = y - this.h; 
-	 this.z=2;
+	 this.z=0.5;
   
 };
 
@@ -227,7 +227,7 @@ var FireBallN = function(x,y){
     this.x = x - this.w/2; 
 
     this.y = y - this.h; 
-  	 this.z=2;
+  	 this.z=0.5;
 };
 
 FireBallN.prototype = new Sprite();
