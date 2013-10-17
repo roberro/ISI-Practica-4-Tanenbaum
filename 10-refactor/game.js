@@ -1,7 +1,8 @@
 var sprites = {
     ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
     missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
-    enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }
+    enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+    explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
 };
 
 var enemies = {
@@ -114,6 +115,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
 // poder ser dibujada desde el bucle principal del juego
 var PlayerShip = function() { 
     this.up = true;
+    this.upB= true;
+    this.upN= true;
 
     this.setup('ship', { vx: 0, reloadTime: 0.25, maxVel: 200 });
 
@@ -145,6 +148,29 @@ var PlayerShip = function() {
 	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 	  	this.up=false;
 	}
+
+    //FUEGO CON B
+	if(!Game.keys['fireB']) this.upB = true;
+	if(Game.keys['fireB'] && this.reload < 0 && this.upB ) {
+	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
+	    //Game.keys['fire'] = false;
+	    this.reload = this.reloadTime;
+
+	    // Se añaden al gameboard 2 misiles 
+	    this.board.add(new FireBallB(this.x+this.w,this.y+this.h/2));
+	    this.upB=false;
+	}
+	//FUEGO CON N
+	if(!Game.keys['fireN']) this.upN = true;
+	if(Game.keys['fireN'] && this.reload < 0 && this.upN ) {
+	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
+	    //Game.keys['fire'] = false;
+	    this.reload = this.reloadTime;
+
+	    // Se añaden al gameboard 2 misiles 
+	    this.board.add(new FireBallN(this.x+this.w,this.y+this.h/2));
+	    this.upN=false;
+	}
     }
 }
 
@@ -171,7 +197,53 @@ PlayerMissile.prototype.step = function(dt)  {
     if(this.y < -this.h) { this.board.remove(this); }
 };
 
+// fireballB
+var FireBallB = function(x,y){
+    this.w = (SpriteSheet.map['explosion'].w);
+    this.h = (SpriteSheet.map['explosion'].h);
+    this.x = x - this.w/2; 
 
+    this.y = y - this.h; 
+    this.vy = -1500;
+    this.vx = -150;
+  
+};
+
+FireBallB.prototype.step = function(dt)  {
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    this.vy=this.vy+100;
+    if(this.y < -this.h) { this.board.remove(this); }
+    if(this.x < -this.w) { this.board.remove(this); }
+};
+
+FireBallB.prototype.draw = function(ctx)  {
+    SpriteSheet.drawMedio(ctx,'explosion',this.x,this.y);
+};
+
+// fireballN
+var FireBallN = function(x,y){
+    this.w = (SpriteSheet.map['explosion'].w);
+    this.h = (SpriteSheet.map['explosion'].h);
+    this.x = x - this.w/2; 
+
+    this.y = y - this.h; 
+    this.vy = -1500;
+    this.vx = 150;
+  
+};
+
+FireBallN.prototype.step = function(dt)  {
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    this.vy=this.vy+100;
+    if(this.y < -this.h) { this.board.remove(this); }
+    if(this.x < -this.w) { this.board.remove(this); }
+};
+
+FireBallN.prototype.draw = function(ctx)  {
+    SpriteSheet.drawMedio(ctx,'explosion',this.x,this.y);
+};
 
 // Constructor para las naves enemigas. Un enemigo se define mediante
 // un conjunto de propiedades provenientes de 3 sitios distintos, que

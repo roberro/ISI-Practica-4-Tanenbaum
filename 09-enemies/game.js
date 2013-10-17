@@ -162,7 +162,7 @@ var PlayerShip = function() {
 	  	this.up=false;
 	}
 
-
+    //FUEGO CON B
 	if(!Game.keys['fireB']) this.upB = true;
 	if(Game.keys['fireB'] && this.reload < 0 && this.upB ) {
 	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload

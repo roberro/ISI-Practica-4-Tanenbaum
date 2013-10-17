@@ -141,15 +141,9 @@ describe("Clase PlayerMissile", function(){
     Game = {keys: {'fire': false}};
     board.step(dt);
     Game = {keys: {'fire': true}};
-   board.step(dt);
+    board.step(dt);
     expect(board.objects.length).toBe(5);
-  
-  
   });
 
 
-
-  
-    
-    
 });
