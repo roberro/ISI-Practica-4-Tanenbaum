@@ -291,6 +291,7 @@ Sprite.prototype.merge = function(props) {
     }
 }
 
+
 Sprite.prototype.draw = function(ctx) {
     SpriteSheet.draw(ctx,this.sprite,this.x,this.y,this.frame,this.z);
 }
