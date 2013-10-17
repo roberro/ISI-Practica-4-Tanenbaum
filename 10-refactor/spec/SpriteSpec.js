@@ -13,6 +13,8 @@ describe("Clase SpriteSpec", function(){
                   ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
                   enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },},
           draw: function(){},
+			 merge: function(){},
+			 setup: function(){},
         };
         
     });
@@ -28,5 +30,19 @@ describe("Clase SpriteSpec", function(){
 
    });
 
+   it("setup", function(){
+
+        var board = new GameBoard();
+        enemigo= new Enemy(enemies.basic);
+        board.add(enemigo);
+        board.add(new Enemy(enemies.basic, { x: 200 }));
+        expect(board.objects.length).toEqual(2);   
+        
+			spyOn(enemigo, "merge");
+
+		    enemigo.setup(enemies.basic.sprite)
+       	 expect(enemigo.merge).toHaveBeenCalled();
+
+   });
 
 });
