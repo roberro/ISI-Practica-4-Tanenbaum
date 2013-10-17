@@ -36,8 +36,12 @@ describe("Clase CollisionsSpec", function(){
 	board.add(enemy);
         board.add(missile);
         
+	//Comprobamos que antes de la colision hay dos objetos
+	expect(board.objects.length).toBe(2);
+
         board.step(dt);
 
+	//Comprobamos que cuando colisionan aparece solo un objeto(explosion)
 	expect(board.objects[0].sprite).toBe('explosion');
         expect(board.objects.length).toBe(1);
         
@@ -66,14 +70,87 @@ describe("Clase CollisionsSpec", function(){
 	board.add(enemy);
         board.add(missile);
          
+	//Comprobamos que antes de la colision hay dos objetos
+	expect(board.objects.length).toBe(2);
 
         board.step(dt);
 
+	//Comprobamos que la vida del enemigo se ha reducido de 20 a 10
 	expect(enemy.health).toBe(10);
+
+	//Comprobamos que despues de la colision los misiles desaparecen y queda solo el enemigo
 	expect(board.objects[0]).toBe(enemy);
         expect(board.objects.length).toBe(1);
         
         
+  });
+
+  it("FireBall destruye enemigo", function() {
+  	SpriteSheet = {
+        		map : {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                               fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
+                               explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }
+			}
+        };
+	
+	var board = new GameBoard();
+	var dt= 30/10000;
+
+	var enemy = new Enemy(enemies.basic);
+        enemy.x=2;
+        enemy.y=4;
+
+        var fireBall = new FireBallB(2,4);
+        fireBall.x=2;
+        fireBall.y=4;
+
+	board.add(enemy);
+        board.add(fireBall);
+        
+        //Comprobamos que antes de la colision hay dos objetos
+	expect(board.objects.length).toBe(2);
+      
+        board.step(dt);
+
+	//Comprobamos que tras la colision se produce una explosion y desaparece la nave enemiga
+	expect(board.objects[1].sprite).toBe('explosion');
+	
+	//Comprobamos que existen 2 objetos la explosion y la bola de fuego
+        expect(board.objects.length).toBe(2);
+        expect(board.objects[0]).toBe(fireBall);
+        
+
+  });
+        
+  it("Enemigo destruye miNave", function() {
+  	SpriteSheet = {
+        		map : {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                               ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
+                               explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }
+		      }
+        };
+
+	var board = new GameBoard();
+	var dt= 30/10000;
+
+	var enemy = new Enemy(enemies.basic);
+        enemy.x=1;
+        enemy.y=2;
+
+        var miNave = new PlayerShip();
+        miNave.x=1;
+        miNave.y=2;
+                
+	board.add(enemy);
+        board.add(miNave);
+        
+	//Comprobamos que antes de la colision hay dos objetos
+	expect(board.objects.length).toBe(2);
+
+        board.step(dt);
+	
+	//Comprobamos que tras la colision desaparecen las dos naves y no existe ningun objeto
+        expect(board.objects.length).toBe(0);
   });
 
 });
