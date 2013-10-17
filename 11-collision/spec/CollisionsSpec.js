@@ -1,3 +1,82 @@
+describe("Clase CollisionsSpec", function(){
+   var canvas, ctx;
+
+   beforeEach(function(){
+	loadFixtures('index.html');
+
+	canvas = $('#game')[0];
+	expect(canvas).toExist();
+
+	ctx = canvas.getContext('2d');
+	expect(ctx).toBeDefined();
+
+  });
+   
+
+  it("Daño del misil igual vida de la nave",function(){
+
+	SpriteSheet.map = { missile: {h:10, w:2},
+                            enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                            explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+        };
+
+        var board = new GameBoard();
+	var dt= 30/10000;
+	
+	var enemy = new Enemy(enemies.basic);
+        enemy.x = 5;
+        enemy.y = 5;
+        enemy.health = 10;
+
+        var missile = new PlayerMissile(5,5);
+        missile.x = 5;
+        missile.y = 5;
+        missile.damage = 10;
+        
+	board.add(enemy);
+        board.add(missile);
+        
+        board.step(dt);
+
+	expect(board.objects[0].sprite).toBe('explosion');
+        expect(board.objects.length).toBe(1);
+        
+
+  });
+
+  it("Daño del misil inferior vida de la nave",function(){
+	SpriteSheet.map = { missile: {h:10, w:2},
+                            enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                            explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+        };
+
+        var board = new GameBoard();
+	var dt= 30/10000;
+
+	var enemy = new Enemy(enemies.basic);
+        enemy.x = 5;
+        enemy.y = 5;
+        enemy.health = 20;
+	
+        var missile = new PlayerMissile(5,5);
+        missile.x = 5;
+        missile.y = 5;
+        missile.damage = 10;
+
+	board.add(enemy);
+        board.add(missile);
+         
+
+        board.step(dt);
+
+	expect(enemy.health).toBe(10);
+	expect(board.objects[0]).toBe(enemy);
+        expect(board.objects.length).toBe(1);
+        
+        
+  });
+
+});
 /*
 
   Requisitos:
