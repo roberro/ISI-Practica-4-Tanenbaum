@@ -58,11 +58,18 @@ describe("Clase PlayerMissile", function(){
 
     });
 
+
+
+
+
+
+
     it("step", function(){
 			var miMissile = new PlayerMissile(1,1);
 			misil = {
 			   map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1,vy: -700 }},
-	   		remove: function(obj) {}
+	   		remove: function(obj) {},
+	   		collide:function(){}
 			};
 
 		miMissile.board=misil;
@@ -72,6 +79,14 @@ describe("Clase PlayerMissile", function(){
 		miMissile.step(1);
 		expect(misil.remove).toHaveBeenCalled();
     });
+    
+    
+    
+    
+ 
+    
+    
+    
     
      it("disparar",function(){
     Game = {width: 320, height: 480, keys: {'fire': true}};
