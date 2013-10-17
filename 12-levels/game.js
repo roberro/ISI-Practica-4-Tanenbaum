@@ -81,6 +81,9 @@ var level1 = [
 
 
 
+
+
+
 var playGame = function() {
     var board = new GameBoard();
     board.add(new PlayerShip());
@@ -247,16 +250,45 @@ var PlayerShip = function() {
     }
 };
 
+
 // Heredamos del prototipo new Sprite()
 PlayerShip.prototype = new Sprite();
 PlayerShip.prototype.type = OBJECT_PLAYER;
 
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
+
+
     if(this.board.remove(this)) {
-	loseGame();
+    
+    
+       // SUPER EXPLOSION
+       this.board.add(new Explosion(this.x + this.w/2, 
+                                           this.y + this.h/5));    
+       this.board.add(new Explosion(this.x, 
+                                           this.y + this.h/2));                                    
+       this.board.add(new Explosion(this.x + this.w, 
+                                           this.y + this.h/2));
+       this.board.add(new Explosion(this.x + this.w/2, 
+                                           this.y + this.h/2)); 
+       this.board.add(new Explosion(this.x + this.w/2, 
+                                           this.y + this.h/2));
+       this.board.add(new Explosion(this.x + this.w/2, 
+                                           this.y + this.h/2));
+       this.board.add(new Explosion(this.x + this.w/2, 
+                                           this.y + this.h/2));
+                                                                                                                                                                
+                                    
+     setTimeout("loseGame()", 500);
+   
     }
+ 
+
+    
 };
+
+
+
 
 
 // Constructor para los misiles.
@@ -409,8 +441,8 @@ Enemy.prototype.step = function(dt) {
 
     var collision = this.board.collide(this,OBJECT_PLAYER);
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
+	    collision.hit(this.damage);
+	    this.board.remove(this);
     }
 
     if(this.y > Game.height ||
