@@ -124,6 +124,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
 var PlayerShip = function() { 
 
     this.up = true;
+    this.upB= true;
+    this.upN= true;
     this.setup('ship', { vx: 0, frame: 0, reloadTime: 0.25, maxVel: 200 });
 
     this.reload = this.reloadTime;
@@ -153,6 +155,28 @@ var PlayerShip = function() {
 	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
 	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 	  	this.up=false;
+	}
+    //FUEGO CON B
+	if(!Game.keys['fireB']) this.upB = true;
+	if(Game.keys['fireB'] && this.reload < 0 && this.upB ) {
+	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
+	    //Game.keys['fire'] = false;
+	    this.reload = this.reloadTime;
+
+	    // Se añaden al gameboard 2 misiles 
+	    this.board.add(new FireBallB(this.x+this.w,this.y+this.h/2));
+	    this.upB=false;
+	}
+	//FUEGO CON N
+	if(!Game.keys['fireN']) this.upN = true;
+	if(Game.keys['fireN'] && this.reload < 0 && this.upN ) {
+	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
+	    //Game.keys['fire'] = false;
+	    this.reload = this.reloadTime;
+
+	    // Se añaden al gameboard 2 misiles 
+	    this.board.add(new FireBallN(this.x+this.w,this.y+this.h/2));
+	    this.upN=false;
 	}
     }
 }
@@ -185,6 +209,49 @@ PlayerMissile.prototype.step = function(dt)  {
     } else if(this.y < -this.h) { 
 	this.board.remove(this); 
     }
+};
+// fireballB
+var FireBallB = function(x,y){
+
+	 this.setup('explosion',{vy: -1500, vx: -150});
+    this.x = x - this.w/2; 
+
+    this.y = y - this.h; 
+	 this.z=0.5;
+  
+};
+
+FireBallB.prototype = new Sprite();
+
+FireBallB.prototype.step = function(dt)  {
+
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    this.vy=this.vy+100;
+    if(this.y < -this.h) { this.board.remove(this); }
+    if(this.x < -this.w) { this.board.remove(this); }
+	 
+};
+
+
+// fireballN
+var FireBallN = function(x,y){
+	 this.setup('explosion',{vy: -1500, vx: 150});
+    this.x = x - this.w/2; 
+
+    this.y = y - this.h; 
+  	 this.z=0.5;
+};
+
+FireBallN.prototype = new Sprite();
+
+FireBallN.prototype.step = function(dt)  {
+	 	
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    this.vy=this.vy+100;
+    if(this.y < -this.h) { this.board.remove(this); }
+    if(this.x < -this.w) { this.board.remove(this); }
 };
 
 
