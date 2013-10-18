@@ -62,7 +62,8 @@ describe("Clase PlayerMissile", function(){
 			var miMissile = new PlayerMissile(1,1);
 			misil = {
 			   map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1,vy: -700 }},
-	   		remove: function(obj) {}
+	   		remove: function(obj) {},
+				collide:function(){}
 			};
 
 		miMissile.board=misil;

@@ -91,11 +91,11 @@ var level2= [
     [ 0,        4000,  500,         'step' ,       {E: 70, health:20}         ],
     [ 1000,     1200,  200,         'boss'               ],
     [ 6000,     10000, 500  ,       'ltr' ,        { x: 180, A: 0,C: 10, E: 50, F:100, G:1, H: Math.PI/2  }],
-    [ 10000,    18000, 500,         'circle',   {x:200, A:10, B:-200, C:2, E:70, F:80, H: Math.sin(Math.PI)}],
-    [ 20000,    21500, 400,         'wiggle',   { x: 250, B:-60, C:1, E:70, G:2} ],
+//    [ 10000,    18000, 500,         'circle',   {x:200, A:10, B:-200, C:2, E:70, F:80, H: Math.sin(Math.PI)}],
+//    [ 20000,    21500, 400,         'wiggle',   { x: 250, B:-60, C:1, E:70, G:2} ],
     [ 20000,    21500, 400,         'wiggle',   { x: 50, B:60, C:1, E:70, G:2} ],    
     [ 20000,    23000, 400,         'wiggle',   { x: 250, B:-60, C:0.5, E:70, G:2} ],
-    [ 20000,    23000, 400,         'wiggle',   { x: 50, B:60, C:0.5, E:70, G:2}  ],
+//    [ 20000,    23000, 400,         'wiggle',   { x: 50, B:60, C:0.5, E:70, G:2}  ],
     [ 25000,    25500, 500,         'straight', { x:0, B:160, C:1.7, E:400}],
     [ 25000,    25500, 500,         'straight', { x:280, B:160, C:-1.7, E:400}]
     
@@ -123,7 +123,7 @@ var playGame = function() {
     // Se un nuevo nivel al tablero de juego, pasando la definición de
     // nivel level1 y la función callback a la que llamar si se ha
     // ganado el juego
-    board.add(new Level(level1, winGame));
+    board.add(new Level(level2, winGame));
     Game.setBoard(3,board);
 };
 
