@@ -20,6 +20,7 @@ var enemies = {
     //  horizontal sinusoidal suave.
     ltr:      { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, 
 		B: 75, C: 1, E: 100  },
+		
 
     // circle tiene velocidad sinusoidal vx e vy, que junto al
     // parámetro H de desplazamiento en el tiempo le dotan de un
@@ -33,7 +34,10 @@ var enemies = {
     wiggle:   { x: 100, y: -50, sprite: 'enemy_bee', health: 20, 
 		B: 50, C: 4, E: 100 },
     step:     { x: 0,   y: -50, sprite: 'enemy_circle', health: 10,
-		B: 150, C: 1.2, E: 75 }
+		B: 150, C: 1.2, E: 75 },
+		
+		boss:    { x: 140,   y: -50, sprite: 'enemy_ship', health: 5000, 
+		E: 10 },
 };
 
 
@@ -67,6 +71,35 @@ var startGame = function() {
 // override que substituyen a los de la plantilla en enemies para ese
 // enemigo.
 
+/*var level1 = [
+  //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+    [ 0,        4000,  500,         'step'                 ],
+    [ 6000,     13000, 800,         'ltr'                  ],
+    [ 10000,    16000, 400,         'circle'               ],
+    [ 17800,    20000, 500,         'straight', { x: 50  } ],
+    [ 18200,    20000, 500,         'straight', { x: 90  } ],
+    [ 18200,    20000, 500,         'straight', { x: 10  } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 150 } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 100 } ]
+];
+*/
+
+
+
+
+var level2= [
+    [ 0,        4000,  500,         'step' ,       {E: 70, health:20}         ],
+    [ 1000,     1200,  200,         'boss'               ],
+    [ 6000,     10000, 500  ,       'ltr' ,        { x: 180, A: 0,C: 10, E: 50, F:100, G:1, H: Math.PI/2  }],
+    [ 10000,    18000, 500,         'circle',   {x:200, A:10, B:-200, C:2, E:70, F:80, H: Math.sin(Math.PI)}],
+    [ 20000,    21500, 400,         'wiggle',   { x: 250, B:-60, C:1, E:70, G:2} ],
+    [ 20000,    21500, 400,         'wiggle',   { x: 50, B:60, C:1, E:70, G:2} ],    
+    [ 20000,    23000, 400,         'wiggle',   { x: 250, B:-60, C:0.5, E:70, G:2} ],
+    [ 20000,    23000, 400,         'wiggle',   { x: 50, B:60, C:0.5, E:70, G:2}  ],
+    [ 25000,    25500, 500,         'straight', { x:0, B:160, C:1.7, E:400}],
+    [ 25000,    25500, 500,         'straight', { x:280, B:160, C:-1.7, E:400}]
+    
+];
 var level1 = [
   //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
     [ 0,        4000,  500,         'step'                 ],
@@ -83,7 +116,6 @@ var level1 = [
 
 
 
-
 var playGame = function() {
     var board = new GameBoard();
     board.add(new PlayerShip());
@@ -95,12 +127,33 @@ var playGame = function() {
     Game.setBoard(3,board);
 };
 
+var playlvl2 = function() {
+    var board = new GameBoard();
+    board.add(new PlayerShip());
+
+    // Se un nuevo nivel al tablero de juego, pasando la definición de
+    // nivel level1 y la función callback a la que llamar si se ha
+    // ganado el juego
+    board.add(new Level(level2, winGameFinal));
+    Game.setBoard(3,board);
+};
+
+
+
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
-var winGame = function() {
+var winGameFinal = function() {
     Game.setBoard(3,new TitleScreen("You win!", 
                                     "Press fire to play again",
                                     playGame));
+};
+
+// Llamada cuando han desaparecido todos los enemigos del nivel sin
+// que alcancen a la nave del jugador
+var winGame = function() {
+    Game.setBoard(3,new TitleScreen("You win this level!", 
+                                    "Press fire to play next level",
+                                    playlvl2));
 };
 
 
