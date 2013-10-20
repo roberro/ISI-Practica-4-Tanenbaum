@@ -43,4 +43,73 @@ alternativos para algunas de las propiedades de la plantilla.
 
 
 */
+    describe("Clase Enemy", function(){
+   
+    beforeEach(function(){
+        loadFixtures('index.html');
 
+        canvas = $('#game')[0];
+        expect(canvas).toExist();
+
+        ctx = canvas.getContext('2d');
+        expect(ctx).toBeDefined();
+        
+        SpriteSheet = {
+          map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                  ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
+                  enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },},
+          draw: function(){},
+        };
+        
+    });
+    
+    
+   it("draw", function(){ 
+        
+        NuevoSprite= new Sprite();
+
+        spyOn(SpriteSheet, "draw");
+ 
+		    NuevoSprite.draw(ctx)
+        expect(SpriteSheet.draw).toHaveBeenCalled();        
+  
+   });      
+        
+   
+    it("step", function(){
+      
+      
+      Game = {width: 320, height: 480};
+      var baseParameters =  { A: 0, B: 0, C: 0, D: 0, 
+                        E: 0, F: 0, G: 0, H: 0 }
+      var enemies = {
+      
+          basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 }
+
+      };
+      
+    
+			var miEnemigo = new Enemy(enemies.basic);
+			Enemigo = {
+	   		remove: function(obj) {},
+				collide: function(obj) {},
+			};
+
+		miEnemigo.board=Enemigo;
+
+		spyOn(Enemigo, "remove");
+
+      
+    miEnemigo.step(0.2);
+		expect(Enemigo.remove).not.toHaveBeenCalled(); 
+		//No lo llama porque aun no se ha salido
+
+        
+
+		miEnemigo.step(7);
+		expect(Enemigo.remove).toHaveBeenCalled();
+		//Ya ha dado tiempo a que el enemigo salga 
+  
+    });
+});    
+        
