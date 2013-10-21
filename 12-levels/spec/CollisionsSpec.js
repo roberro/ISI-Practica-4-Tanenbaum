@@ -10,8 +10,15 @@ describe("Clase CollisionsSpec", function(){
 	ctx = canvas.getContext('2d');
 	expect(ctx).toBeDefined();
 
+	Game1 = Game;
+	Sprite = SpriteSheet;
+       
   });
    
+  afterEach(function() {
+		Game = Game1;
+                SpriteSheet = Sprite;             
+  });
 
   it("Daño del misil igual vida de la nave",function(){
 
@@ -19,6 +26,10 @@ describe("Clase CollisionsSpec", function(){
                             enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
                             explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
         };
+
+	var enemies = {
+                 basic: { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, B: 75, C: 1, E: 100  }
+   	}
 
         var board = new GameBoard();
 	var dt= 30/10000;
@@ -53,7 +64,11 @@ describe("Clase CollisionsSpec", function(){
                             enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
                             explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
         };
-
+	
+	var enemies = {
+                 basic: { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, B: 75, C: 1, E: 100  }
+  	}
+	
         var board = new GameBoard();
 	var dt= 30/10000;
 
@@ -93,6 +108,10 @@ describe("Clase CollisionsSpec", function(){
 			}
         };
 	
+	var enemies = {
+                 basic: { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, B: 75, C: 1, E: 100  }
+   	}
+
 	var board = new GameBoard();
 	var dt= 30/10000;
 
@@ -123,12 +142,22 @@ describe("Clase CollisionsSpec", function(){
   });
         
   it("Enemigo destruye miNave", function() {
+
+	Game = {
+        	setBoard:function(){},
+                keys: {}
+        };
+
   	SpriteSheet = {
         		map : {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
                                ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
                                explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }
 		      }
         };
+
+	var enemies = {
+                 basic: { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, B: 75, C: 1, E: 100  }
+   	}
 
 	var board = new GameBoard();
 	var dt= 30/10000;
@@ -150,7 +179,7 @@ describe("Clase CollisionsSpec", function(){
         board.step(dt);
 	
 	//Comprobamos que tras la colision desaparecen las dos naves y no existe ningun objeto
-        expect(board.objects.length).toBe(0);
+        expect(board.objects.length).toBe(7);
   });
 
 });
